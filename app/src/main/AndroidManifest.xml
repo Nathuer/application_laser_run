@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.application_laser_run"
     xmlns:tools="http://schemas.android.com/tools">
-
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,7 +25,7 @@
             android:name=".ReadyActivity"
             android:exported="false" />
         <activity
-            android:name=".CategoryChoose"
+            android:name=".CategoryChooseActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

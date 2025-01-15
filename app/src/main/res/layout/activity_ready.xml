@@ -7,4 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".ReadyActivity">
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prêt ?"
+        tools:layout_editor_absoluteX="187dp"
+        tools:layout_editor_absoluteY="55dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="162dp"
+        android:layout_height="202dp"
+        app:srcCompat="@android:drawable/ic_media_play"
+        tools:layout_editor_absoluteX="124dp"
+        tools:layout_editor_absoluteY="175dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
