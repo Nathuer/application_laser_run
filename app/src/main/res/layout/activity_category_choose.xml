@@ -16,9 +16,9 @@
             android:id="@+id/categoryNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category Name:"
-            android:textSize="18sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="Nom:"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/categoryName"
@@ -118,6 +118,19 @@
             android:layout_height="wrap_content"
             android:text="0"
             android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Valider" />
     </LinearLayout>
 
 </LinearLayout>

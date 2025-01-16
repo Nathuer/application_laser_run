@@ -1,5 +1,6 @@
-package com.example.application_laser_run
+package com.example.application_laser_run.webservice
 
+import com.example.application_laser_run.model.Category
 import retrofit2.Response
 import retrofit2.http.GET
 

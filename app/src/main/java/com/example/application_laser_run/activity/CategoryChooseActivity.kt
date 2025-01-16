@@ -1,10 +1,11 @@
-package com.example.application_laser_run
+package com.example.application_laser_run.activity
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.application_laser_run.R
 
 class CategoryChooseActivity : AppCompatActivity() {
 
@@ -32,5 +33,11 @@ class CategoryChooseActivity : AppCompatActivity() {
         distanceParcouruText.text = "$distanceParcouru"
         tourText.text = "$tour"
         distanceTirText.text = "$distanceTir"
+
+        findViewById<Button>(R.id.buttonCategory).setOnClickListener{val i = Intent(this, ReadyActivity::class.java)
+        startActivity(i)}
     }
+
+
+
 }

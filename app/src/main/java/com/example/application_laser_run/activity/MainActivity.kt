@@ -1,4 +1,4 @@
-package com.example.application_laser_run
+package com.example.application_laser_run.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,9 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.application_laser_run.ApiClient.apiService
+import com.example.application_laser_run.R
+import com.example.application_laser_run.webservice.ApiClient.apiService
+import com.example.application_laser_run.model.Category
 import kotlinx.coroutines.launch
 import retrofit2.Response
 

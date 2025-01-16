@@ -1,4 +1,4 @@
-package com.example.application_laser_run
+package com.example.application_laser_run.model
 
 data class Category(
     val id: String,
