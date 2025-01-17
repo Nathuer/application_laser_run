@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="backgroundColor">#F1F1F1</color> <!-- Fond doux pour l'activité -->
+    <color name="primaryTextColor">#1A237E</color> <!-- Couleur du titre -->
+    <color name="secondaryTextColor">#616161</color> <!-- Couleur du sous-titre -->
+    <color name="titleBackgroundColor">#BBDEFB</color> <!-- Fond léger pour le titre -->
+    <color name="listBackground">#FFFFFF</color>
+    <color name="hoverColor">#B0BEC5</color> <!-- Couleur plus foncée au survol -->
 </resources>

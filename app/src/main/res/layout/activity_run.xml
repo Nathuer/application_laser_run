@@ -1,41 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".activity.RunActivity">
 
+    <!-- Chronomètre en haut à gauche -->
+    <Chronometer
+        android:id="@+id/chronoEveryTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Texte "Cours !" centré -->
     <TextView
         android:id="@+id/textViewRun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cours !"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/buttonRun"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintVertical_bias="0.4" />
 
-    <!-- Chronomètre de droite -->
-    <Chronometer
-        android:id="@+id/chronoEveryTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="16dp"
-        tools:layout_editor_absoluteY="27dp" />
-
+    <!-- Bouton centré -->
     <Button
         android:id="@+id/buttonRun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:text="Terminer la course"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRun"
-        tools:layout_editor_absoluteX="97dp"/>
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewRun"
+        app:layout_constraintVertical_bias="0.5" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -20,7 +20,7 @@ class ReadyActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        findViewById<ImageButton>(R.id.imageButton).setOnClickListener{val i = Intent(this, RunActivity::class.java)
+        findViewById<Button>(R.id.buttonReady).setOnClickListener{val i = Intent(this, RunActivity::class.java)
         startActivity(i)}
     }
 }

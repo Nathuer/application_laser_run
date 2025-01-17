@@ -5,8 +5,6 @@ import android.os.SystemClock
 
 class MyApplication : Application() {
     val start = SystemClock.elapsedRealtime()
+    var roundCount: Int = 0
 
-    override fun onCreate() {
-        super.onCreate()
-    }
 }

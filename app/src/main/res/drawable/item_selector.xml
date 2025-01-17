@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Lorsque l'élément est survolé ou sélectionné, on change la couleur -->
+    <item android:drawable="@color/hoverColor" android:state_pressed="true" />
+    <item android:drawable="@color/hoverColor" android:state_focused="true" />
+    <!-- État normal -->
+    <item android:drawable="@android:color/white" />
+</selector>

@@ -5,26 +5,33 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".activity.ReadyActivity">
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Prêt ?"
+        android:text="@string/pret"
+        android:textSize="40sp"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonReady"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.2"/>
+        app:layout_constraintVertical_bias="0.4" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="241dp"
-        android:layout_height="248dp"
-        android:layout_marginTop="152dp"
-        android:background="@drawable/round_button"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:srcCompat="@android:drawable/ic_media_play"
-        tools:layout_editor_absoluteX="85dp" />
+    <Button
+        android:id="@+id/buttonReady"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/demarrer"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/textView8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.6" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

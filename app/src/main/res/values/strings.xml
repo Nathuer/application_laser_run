@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">application_laser_run</string>
-    <string name="choisir_sa_categorie">Choisir sa catégorie de compétition</string>
     <string name="laser_run">Laser Run</string>
+    <string name="choisir_sa_categorie">Choisir sa catégorie de compétition</string>
+    <string name="pret">Prêt ?</string>
+    <string name="demarrer">Démarrer</string>
 </resources>
