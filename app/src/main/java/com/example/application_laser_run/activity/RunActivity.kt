@@ -28,6 +28,13 @@ class RunActivity : AppCompatActivity() {
             insets
         }
 
+        // Récupérer la valeur de 'tour' depuis SharedPreferences (si disponible)
+        val sharedPreferences = getSharedPreferences("game_prefs", MODE_PRIVATE)
+        val storedTour = sharedPreferences.getInt("tour", 1) // Valeur par défaut est 1
+
+        // Récupérer la valeur de `tour` depuis l'Intent
+        val tour = intent.getIntExtra("CATEGORY_TOUR", storedTour)
+
         val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
 
         // Vérifier si un temps écoulé est passé depuis l'activité précédente
@@ -48,15 +55,23 @@ class RunActivity : AppCompatActivity() {
             // Récupérer le temps écoulé du chrono
             val chronoTime = SystemClock.elapsedRealtime() - chronoEveryTime.base
 
-            // Passer le temps à l'activité suivante
+            // Passer le temps et la valeur de 'tour' à l'activité suivante
             val intent = Intent(this, ShootActivity::class.java)
             intent.putExtra("chronoTime", chronoTime)
+            intent.putExtra("CATEGORY_TOUR", tour)
             startActivity(intent)
         }
     }
 
     override fun onPause() {
         super.onPause()
+        // Sauvegarder la valeur de 'tour' dans SharedPreferences
+        val sharedPreferences = getSharedPreferences("game_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val tour = intent.getIntExtra("CATEGORY_TOUR", 1) // Vous pouvez récupérer la valeur de 'tour' ici
+        editor.putInt("tour", tour)  // Sauvegarder la valeur de 'tour'
+        editor.apply()
+
         // Enregistrer l'état du chrono avant de quitter l'activité
         val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
         chronoBaseTime = chronoEveryTime.base + (SystemClock.elapsedRealtime() - chronoEveryTime.base)
@@ -70,9 +85,4 @@ class RunActivity : AppCompatActivity() {
         chronoEveryTime.start()
     }
 }
-
-
-    private fun chronoEternal(c: Chronometer){
-        c.base
-    }
 

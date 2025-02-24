@@ -34,7 +34,7 @@ class CategoryChooseActivity : AppCompatActivity() {
         tourText.text = "$tour"
         distanceTirText.text = "$distanceTir"
 
-        findViewById<Button>(R.id.buttonCategory).setOnClickListener{val i = Intent(this, ReadyActivity::class.java)
+        findViewById<Button>(R.id.buttonCategory).setOnClickListener{val i = Intent(this, ReadyActivity::class.java).apply { putExtra("CATEGORY_TOUR", tour) }
         startActivity(i)}
     }
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.application_laser_run"
-    xmlns:tools="http://schemas.android.com/tools">
-    
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.application_laser_run">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".activity.MyApplication"
         android:allowBackup="true"
@@ -16,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Application_laser_run"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.StatActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.RunActivity"
             android:exported="false" />

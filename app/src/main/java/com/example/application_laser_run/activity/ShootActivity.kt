@@ -1,6 +1,8 @@
 package com.example.application_laser_run.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
@@ -9,49 +11,73 @@ import android.widget.Chronometer
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.application_laser_run.R
 
 class ShootActivity : AppCompatActivity() {
     private var countdownTimer: CountDownTimer? = null
     private var timeRemaining: Long = 50000
-    private var roundCount: Int = 0 // Compteur pour les tours
+    private var roundCount: Int = 1
+    private lateinit var sharedPreferences: SharedPreferences
+    private var tour: Int = 1  // Déclarer tour ici comme variable d'instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_shoot)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        sharedPreferences = getSharedPreferences("game_prefs", MODE_PRIVATE)
+
+        // Récupérer la valeur de tour passée par l'activité précédente
+        tour = intent.getIntExtra("CATEGORY_TOUR", 1)
+
+        // Sauvegarder la valeur de tour dans SharedPreferences
+        sharedPreferences.edit().putInt("tour", tour).apply()
+
+        // Récupérer la valeur de `tour` depuis SharedPreferences (juste au cas où on veut l'utiliser plus tard)
+        val storedTour = sharedPreferences.getInt("tour", 1)
+        println("Tour actuel: $storedTour")
+
+        val lastSessionTime = sharedPreferences.getLong("lastSessionTime", 0L)
+        val currentTime = System.currentTimeMillis()
+
+        if (currentTime - lastSessionTime > 5000) {
+            roundCount = 1
+            sharedPreferences.edit().putInt("roundCount", roundCount).apply()
+        } else {
+            roundCount = sharedPreferences.getInt("roundCount", 1)
         }
 
-        // Récupérer le temps du chronomètre passé dans l'Intent
-        val chronoTime = intent.getLongExtra("chronoTime", 0L)
+        updateRoundTextView()
 
-        // Initialiser le chronomètre
+        val chronoTime = intent.getLongExtra("chronoTime", 0L)
         val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
-        chronoEveryTime.base = SystemClock.elapsedRealtime() - chronoTime  // Définir la base du chrono à la valeur envoyée
-        chronoEveryTime.start()  // Continuer à faire tourner le chronomètre
+        chronoEveryTime.base = SystemClock.elapsedRealtime() - chronoTime
+        chronoEveryTime.start()
 
         startCountdown()
-
-        // Configurer la ListView
         fetchTarget()
+    }
+
+    private fun updateRoundTextView() {
+        val roundTextView = findViewById<TextView>(R.id.textTour)
+        roundTextView.text = "Tour n° $roundCount"
+
+
+        // Comparer roundCount et tour
+        if (roundCount > tour) {
+            Toast.makeText(this, "Fin du jeu. Vous avez terminé tous les tours.", Toast.LENGTH_SHORT).show()
+            val i = Intent(this, StatActivity::class.java)
+            startActivity(i)
+        }
     }
 
     private fun startCountdown() {
         val countdownTextView = findViewById<TextView>(R.id.countdownTextView)
 
-        countdownTimer = object : CountDownTimer(timeRemaining, 1000) {  // 1000ms = 1s
+        countdownTimer = object : CountDownTimer(timeRemaining, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeRemaining = millisUntilFinished
-                // Mettre à jour le TextView avec le temps restant au format MM:SS
                 val seconds = (timeRemaining / 1000).toInt()
                 val minutes = seconds / 60
                 val remainingSeconds = seconds % 60
@@ -59,45 +85,65 @@ class ShootActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                // Lorsque le compte à rebours est terminé
-                countdownTextView.text = "00:00"
+                val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
+                chronoEveryTime.stop()
+
+                val builder = AlertDialog.Builder(this@ShootActivity)
+                builder.setTitle("Temps écoulé")
+                    .setMessage("Le temps du tour est terminé !")
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                        val intent = Intent(this@ShootActivity, RunActivity::class.java)
+                        val chronoTime = SystemClock.elapsedRealtime() - chronoEveryTime.base
+                        intent.putExtra("elapsedTime", chronoTime)
+                        startActivity(intent)
+                    }
+                builder.create().show()
+
+                val mediaPlayer = MediaPlayer.create(this@ShootActivity, R.raw.sonnerie)
+                mediaPlayer.setOnCompletionListener { it.release() }
+                mediaPlayer.start()
             }
         }
-
         countdownTimer?.start()
     }
 
     private fun fetchTarget() {
-        // Liste des cibles à afficher
-        val targets = listOf("Cible 1", "Cible 2", "Cible 3", "Cible 4", "Cible 5", "Cible 0")
-
-        // Trouver la ListView
+        val targets = listOf("1", "2", "3", "4", "5", "0")
         val listView = findViewById<ListView>(R.id.listCible)
 
-        // Créer un ArrayAdapter pour associer les données à la ListView
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, targets)
         listView.adapter = adapter
 
-        // Gérer les clics sur les éléments de la liste
         listView.setOnItemClickListener { _, _, position, _ ->
             val selectedTarget = targets[position]
 
-            // Incrémenter le nombre de tours
             roundCount++
+            sharedPreferences.edit().putInt("roundCount", roundCount).apply()
 
-            // Mettre à jour le texte dans le TextView de "Tour n°"
-            val roundTextView = findViewById<TextView>(R.id.textTour)
-            roundTextView.text = "Tour n° $roundCount"  // Mise à jour de l'affichage du tour
-
-            // Récupérer le temps écoulé depuis le démarrage du chronomètre
             val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
             val chronoTime = SystemClock.elapsedRealtime() - chronoEveryTime.base
 
-            // Passer le temps à l'activité suivante (RunActivity)
             val intent = Intent(this, RunActivity::class.java)
             intent.putExtra("elapsedTime", chronoTime)
-            Toast.makeText(this, "Nombre de point marqué : $selectedTarget", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Nombre de points marqués : $selectedTarget", Toast.LENGTH_SHORT).show()
             startActivity(intent)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        updateRoundTextView()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val currentTime = System.currentTimeMillis()
+        sharedPreferences.edit()
+            .putLong("lastSessionTime", currentTime)
+            .putInt("roundCount", roundCount)
+            .apply()
+    }
 }
+
+
