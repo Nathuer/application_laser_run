@@ -9,18 +9,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.application_laser_run.R
 import com.example.application_laser_run.webservice.ApiClient.apiService
+import com.example.application_laser_run.database.AppDatabase
 import com.example.application_laser_run.model.Category
+import com.example.application_laser_run.model.Performance
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var appDatabase: AppDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Initialisation de la base de données
+        appDatabase = AppDatabase.getInstance(this)
+
         // Récupérer les catégories depuis l'API
         fetchCategories()
+        loadPerformances()
     }
 
     private fun fetchCategories() {
@@ -52,6 +60,9 @@ class MainActivity : AppCompatActivity() {
                             putExtra("CATEGORY_DISTANCE_TIR", selectedCategory.shootDistance)
                         }
                         startActivity(intent)
+
+                        // Enregistrer la performance dans la base de données
+                        savePerformance(selectedCategory)
                     }
                 } else {
                     // Gérer l'erreur
@@ -61,6 +72,40 @@ class MainActivity : AppCompatActivity() {
                 // Gérer les exceptions
                 Toast.makeText(this@MainActivity, "Erreur de réseau: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun loadPerformances() {
+        lifecycleScope.launch {
+            val performances = appDatabase.performanceDao().getAll()
+
+            // Tu peux ensuite afficher les performances dans ton UI
+            performances.forEach { performance ->
+                println("Performance ID: ${performance.id}, Start Time: ${performance.startTime}")
+            }
+        }
+    }
+
+
+    private fun savePerformance(category: Category) {
+        // Créer une performance à enregistrer
+        val performance = Performance(
+            runDuration = 0L, // Exemple, tu peux ajuster avec des données réelles
+            shootDuration = 0L,
+            shootMinDuration = 0L,
+            shootAvgDuration = 0L,
+            shootMaxDuration = 0L,
+            missedTargets = 0,
+            speed = 0,
+            totalDuration = 0L,
+            categoryRef = category.name,
+            startTime = System.currentTimeMillis() // Heure de début actuelle
+        )
+
+        // Sauvegarde dans la base de données (utiliser une coroutine pour éviter de bloquer le thread principal)
+        lifecycleScope.launch {
+            appDatabase.performanceDao().insert(performance)
+            Toast.makeText(this@MainActivity, "Performance enregistrée!", Toast.LENGTH_SHORT).show()
         }
     }
 }

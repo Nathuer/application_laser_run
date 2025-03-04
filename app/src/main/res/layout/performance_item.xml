@@ -1,0 +1,38 @@
+<!-- res/layout/item_performance.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/startTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Heure de début: --:--" />
+
+
+    <TextView
+        android:id="@+id/runDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Durée de course: 0 ms" />
+
+    <TextView
+        android:id="@+id/shootDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Durée de tir: 0 ms" />
+
+    <TextView
+        android:id="@+id/speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vitesse: 0 m/s" />
+
+    <TextView
+        android:id="@+id/missedTargets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cibles manquées: 0" />
+</LinearLayout>

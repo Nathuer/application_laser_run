@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Chronometer
 import android.widget.ListView
@@ -20,7 +21,9 @@ class ShootActivity : AppCompatActivity() {
     private var timeRemaining: Long = 50000
     private var roundCount: Int = 1
     private lateinit var sharedPreferences: SharedPreferences
-    private var tour: Int = 1  // Déclarer tour ici comme variable d'instance
+    private var tour: Int = 1
+    private var totalMissedTargets: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +69,12 @@ class ShootActivity : AppCompatActivity() {
 
         // Comparer roundCount et tour
         if (roundCount > tour) {
+            val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
             Toast.makeText(this, "Fin du jeu. Vous avez terminé tous les tours.", Toast.LENGTH_SHORT).show()
             val i = Intent(this, StatActivity::class.java)
+            val chronoFinal = SystemClock.elapsedRealtime() - chronoEveryTime.base
+            i.putExtra("chronoTime", chronoFinal)
+            Log.d("ShootActivity", "chronoFinal récupéré: $chronoFinal")
             startActivity(i)
         }
     }
@@ -96,6 +103,7 @@ class ShootActivity : AppCompatActivity() {
                         val intent = Intent(this@ShootActivity, RunActivity::class.java)
                         val chronoTime = SystemClock.elapsedRealtime() - chronoEveryTime.base
                         intent.putExtra("elapsedTime", chronoTime)
+
                         startActivity(intent)
                     }
                 builder.create().show()
@@ -109,7 +117,7 @@ class ShootActivity : AppCompatActivity() {
     }
 
     private fun fetchTarget() {
-        val targets = listOf("1", "2", "3", "4", "5", "0")
+        val targets = listOf("1", "2", "3", "4", "5", "0") // Les cibles sont numérotées de 1 à 5 et 0 pour "manqué"
         val listView = findViewById<ListView>(R.id.listCible)
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, targets)
@@ -118,7 +126,17 @@ class ShootActivity : AppCompatActivity() {
         listView.setOnItemClickListener { _, _, position, _ ->
             val selectedTarget = targets[position]
 
-            roundCount++
+            // Calculer les cibles ratées
+            val app = application as MyApplication
+            val totalMissedTargets = app.missedTargets
+            app.missedTargets = totalMissedTargets + (5 - selectedTarget.toInt())
+
+            Log.d("ShootActivity", "cibles ratées : ${app.missedTargets}")
+
+            // Sauvegarder les cibles ratées dans SharedPreferences
+            sharedPreferences.edit().putInt("totalMissedTargets", app.missedTargets).apply()
+
+            roundCount++  // Passer au tour suivant
             sharedPreferences.edit().putInt("roundCount", roundCount).apply()
 
             val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
@@ -130,6 +148,8 @@ class ShootActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
 
     override fun onResume() {
         super.onResume()

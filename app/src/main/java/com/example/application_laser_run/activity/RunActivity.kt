@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.application_laser_run.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RunActivity : AppCompatActivity() {
 
@@ -50,10 +52,27 @@ class RunActivity : AppCompatActivity() {
         chronoEveryTime.base = chronoBaseTime
         chronoEveryTime.start()
 
+        // Sauvegarder l'heure de début lors de l'arrivée sur RunActivity
+        val startTime = System.currentTimeMillis()
+        val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        val formattedStartTime = sdf.format(Date(startTime))
+
+        val editor = sharedPreferences.edit()
+        editor.putString("start_time", formattedStartTime) // Enregistrer l'heure de début
+        editor.apply()
+
         val buttonRun = findViewById<Button>(R.id.buttonRun)
         buttonRun.setOnClickListener {
             // Récupérer le temps écoulé du chrono
             val chronoTime = SystemClock.elapsedRealtime() - chronoEveryTime.base
+
+            // Enregistrer l'heure de fin avant de passer à l'activité suivante
+            val endTime = System.currentTimeMillis()
+            val formattedEndTime = sdf.format(Date(endTime))
+
+            // Sauvegarder l'heure de fin dans SharedPreferences
+            editor.putString("end_time", formattedEndTime) // Enregistrer l'heure de fin
+            editor.apply()
 
             // Passer le temps et la valeur de 'tour' à l'activité suivante
             val intent = Intent(this, ShootActivity::class.java)
@@ -85,4 +104,3 @@ class RunActivity : AppCompatActivity() {
         chronoEveryTime.start()
     }
 }
-
