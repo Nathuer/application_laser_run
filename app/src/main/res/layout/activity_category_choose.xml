@@ -5,29 +5,32 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/backgroundColor"
-    >
+    android:layout_gravity="center">
 
     <!-- LinearLayout pour le nom de la catégorie -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="16dp">
 
         <TextView
             android:id="@+id/categoryNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nom:"
-            android:textSize="18sp" />
+            android:text="Nom de la catégorie:"
+            android:textSize="20sp"
+            android:textColor="@color/primaryTextColor"
+            android:paddingEnd="8dp"/>
 
         <TextView
             android:id="@+id/categoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category Name"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+        android:textColor="@color/secondaryTextColor"/>
     </LinearLayout>
 
     <!-- LinearLayout pour la distance initiale -->
@@ -35,22 +38,24 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="16dp">
 
         <TextView
             android:id="@+id/distanceInitialeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distance Initiale:"
-            android:textSize="16sp"
-            android:layout_weight="1" />
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:textColor="@color/primaryTextColor"/>
 
         <TextView
             android:id="@+id/distanceInitiale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textColor="@color/secondaryTextColor"/>
     </LinearLayout>
 
     <!-- LinearLayout pour la distance parcourue -->
@@ -58,22 +63,24 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="16dp">
 
         <TextView
             android:id="@+id/distanceParcouruLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distance Parcourue:"
-            android:textSize="16sp"
-            android:layout_weight="1" />
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:textColor="@color/primaryTextColor"/>
 
         <TextView
             android:id="@+id/distanceParcouru"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textColor="@color/secondaryTextColor"/>
     </LinearLayout>
 
     <!-- LinearLayout pour le tour -->
@@ -81,22 +88,24 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="16dp">
 
         <TextView
             android:id="@+id/tourLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tour:"
-            android:textSize="16sp"
-            android:layout_weight="1" />
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:textColor="@color/primaryTextColor"/>
 
         <TextView
             android:id="@+id/tour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textColor="@color/secondaryTextColor"/>
     </LinearLayout>
 
     <!-- LinearLayout pour la distance de tir -->
@@ -104,35 +113,41 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="16dp">
 
         <TextView
             android:id="@+id/distanceTirLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distance de Tir:"
-            android:textSize="16sp"
-            android:layout_weight="1" />
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:textColor="@color/primaryTextColor"/>
 
         <TextView
             android:id="@+id/distanceTir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textColor="@color/secondaryTextColor"/>
     </LinearLayout>
 
+    <!-- Bouton de validation -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/buttonCategory"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Valider" />
+            android:text="Valider"
+            android:textColor="@color/primaryDark"
+            android:textSize="18sp"
+            android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
 
 </LinearLayout>

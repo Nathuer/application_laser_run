@@ -3,6 +3,7 @@ package com.example.application_laser_run.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.widget.Button
 import android.widget.Chronometer
 import android.widget.ImageButton
@@ -38,6 +39,7 @@ class RunActivity : AppCompatActivity() {
         val tour = intent.getIntExtra("CATEGORY_TOUR", storedTour)
 
         val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
+        val chronoRunTime = findViewById<Chronometer>(R.id.chronoRun)
 
         // Vérifier si un temps écoulé est passé depuis l'activité précédente
         val elapsedTimeFromPreviousActivity = intent.getLongExtra("elapsedTime", 0L)
@@ -51,6 +53,7 @@ class RunActivity : AppCompatActivity() {
 
         chronoEveryTime.base = chronoBaseTime
         chronoEveryTime.start()
+        chronoRunTime.start()
 
         // Sauvegarder l'heure de début lors de l'arrivée sur RunActivity
         val startTime = System.currentTimeMillis()
@@ -66,6 +69,11 @@ class RunActivity : AppCompatActivity() {
             // Récupérer le temps écoulé du chrono
             val chronoTime = SystemClock.elapsedRealtime() - chronoEveryTime.base
 
+            val chronoEveryRun = SystemClock.elapsedRealtime() - chronoRunTime.base
+
+            // Vous pouvez maintenant utiliser ou afficher chronoEveryRun
+            Log.d("ChronoEveryRun", "Le temps récupéré du chronoRun est : $chronoEveryRun")
+
             // Enregistrer l'heure de fin avant de passer à l'activité suivante
             val endTime = System.currentTimeMillis()
             val formattedEndTime = sdf.format(Date(endTime))
@@ -78,6 +86,7 @@ class RunActivity : AppCompatActivity() {
             val intent = Intent(this, ShootActivity::class.java)
             intent.putExtra("chronoTime", chronoTime)
             intent.putExtra("CATEGORY_TOUR", tour)
+            intent.putExtra("chronoEveryRun", chronoEveryRun)
             startActivity(intent)
         }
     }

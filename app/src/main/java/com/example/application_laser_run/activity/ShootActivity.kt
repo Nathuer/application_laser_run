@@ -22,7 +22,6 @@ class ShootActivity : AppCompatActivity() {
     private var roundCount: Int = 1
     private lateinit var sharedPreferences: SharedPreferences
     private var tour: Int = 1
-    private var totalMissedTargets: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +53,16 @@ class ShootActivity : AppCompatActivity() {
         updateRoundTextView()
 
         val chronoTime = intent.getLongExtra("chronoTime", 0L)
+        val chronoRun = intent.getLongExtra("chronoEveryRun", 0L)
+        Log.d("ShootActivity", "chronoEveryRun récupéré: $chronoRun")
+        if (chronoRun == 0L) {
+            Log.e("ShootActivity", "Chrono values not received correctly!")
+        }
+        val app = application as MyApplication
+        app.chronometer += chronoRun
+
+
+
         val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
         chronoEveryTime.base = SystemClock.elapsedRealtime() - chronoTime
         chronoEveryTime.start()
@@ -73,8 +82,12 @@ class ShootActivity : AppCompatActivity() {
             Toast.makeText(this, "Fin du jeu. Vous avez terminé tous les tours.", Toast.LENGTH_SHORT).show()
             val i = Intent(this, StatActivity::class.java)
             val chronoFinal = SystemClock.elapsedRealtime() - chronoEveryTime.base
+            val app = application as MyApplication
+            val chronoEveryRun = app.chronometer
             i.putExtra("chronoTime", chronoFinal)
+            i.putExtra("chronoEveryRun", chronoEveryRun)
             Log.d("ShootActivity", "chronoFinal récupéré: $chronoFinal")
+            Log.d("ShootActivity", "chronoEveryRun récupéré: $chronoEveryRun")
             startActivity(i)
         }
     }

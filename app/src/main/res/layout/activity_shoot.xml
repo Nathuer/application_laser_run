@@ -5,22 +5,30 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ShootActivity">
+    tools:context=".activity.ShootActivity"
+    android:background="@color/backgroundColor"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/textTour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tour n° "
+        android:textSize="20sp"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp" />
 
-
     <Chronometer
         android:id="@+id/chronoEveryTime"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/textTour"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/countdownTextView"
@@ -34,21 +42,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView3"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Combien de cible tu as touché?"-->
-<!--        tools:layout_editor_absoluteX="-2dp"-->
-<!--        tools:layout_editor_absoluteY="109dp" />-->
-
     <ListView
         android:id="@+id/listCible"
-        android:layout_width="415dp"
-        android:layout_height="672dp"
-        android:layout_marginTop="128dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-2dp" />
-
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/countdownTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="32dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:background="@drawable/list_background"
+        android:padding="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

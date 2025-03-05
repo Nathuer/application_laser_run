@@ -20,6 +20,10 @@ interface PerformanceDao {
     @Query("SELECT * FROM Performance WHERE category_ref = :categoryName")
     suspend fun getPerformancesByCategory(categoryName: String): List<Performance>
 
+    @Query("SELECT SUM(run_duration) FROM performance")
+    suspend fun getTotalRunDuration(): Long?
+
+
     @Insert
     suspend fun insert(vararg performance: Performance)
 

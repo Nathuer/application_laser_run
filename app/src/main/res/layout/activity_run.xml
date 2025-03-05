@@ -10,39 +10,53 @@
     android:orientation="vertical"
     tools:context=".activity.RunActivity">
 
-    <!-- Chronomètre en haut à gauche -->
     <Chronometer
         android:id="@+id/chronoEveryTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Texte "Cours !" centré -->
+    <Chronometer
+        android:id="@+id/chronoRun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textViewRun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cours !"
         android:textColor="@color/primaryTextColor"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@id/buttonRun"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chronoEveryTime"
         app:layout_constraintVertical_bias="0.4" />
 
-    <!-- Bouton centré -->
     <Button
         android:id="@+id/buttonRun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Terminer la course"
         android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_background"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewRun"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.5" />
 
 </LinearLayout>

@@ -6,7 +6,7 @@ import android.os.SystemClock
 class MyApplication : Application() {
     val start = SystemClock.elapsedRealtime()
     var roundCount: Int = 0
-
+    var chronometer: Long = 0
     var missedTargets: Int = 0
 
 
