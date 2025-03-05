@@ -1,0 +1,37 @@
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="android:statusBarColor">@color/primaryDark</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
+    </style>
+
+    <style name="TitleText">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#40000000</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+
+    <style name="SubtitleText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="CategoryList">
+        <item name="android:divider">@android:color/darker_gray</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:background">@color/listBackground</item>
+    </style>
+
+    <style name="ListItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:background">@drawable/item_selector</item>
+    </style>
+</resources>

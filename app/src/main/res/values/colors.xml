@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="backgroundColor">#F1F1F1</color> <!-- Fond doux pour l'activité -->
-    <color name="primaryTextColor">#1A237E</color> <!-- Couleur du titre -->
-    <color name="secondaryTextColor">#616161</color> <!-- Couleur du sous-titre -->
-    <color name="titleBackgroundColor">#BBDEFB</color> <!-- Fond léger pour le titre -->
+    <color name="backgroundColor">#ECEFF1</color>
+    <color name="primaryTextColor">#1E88E5</color>
+    <color name="secondaryTextColor">#5D4037</color>
     <color name="listBackground">#FFFFFF</color>
-    <color name="hoverColor">#B0BEC5</color> <!-- Couleur plus foncée au survol -->
+    <color name="primaryDark">#303F9F</color>
+    <color name="hoverColor">#B3E5FC</color>
+    <color name="borderColor">#B0BEC5</color>
+    <color name="buttonBackground">#FF6200EE</color> <!-- Une couleur violette comme exemple -->
+
 </resources>
