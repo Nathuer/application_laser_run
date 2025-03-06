@@ -21,11 +21,13 @@ class StatActivity : AppCompatActivity() {
     private lateinit var adapter: PerformanceAdapter
     private lateinit var totalDurationText: TextView
     private lateinit var totalRunText: TextView
+    private lateinit var totalShootText: TextView
     private lateinit var averageDurationText: TextView
     private lateinit var targetCountsText: TextView
     private lateinit var beginHourText: TextView
     private var chronoTime: Long = 0L // Ajout de chronoTime
     private var chronoRun: Long = 0L // Ajout de chronoRun
+    private var chronoShoot: Long = 0L // Ajout de chronoShoot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class StatActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         totalDurationText = findViewById(R.id.totalDuration)
         totalRunText = findViewById(R.id.totalRun)
+        totalShootText = findViewById(R.id.totalShoot)
         targetCountsText = findViewById(R.id.targetCounts)
         beginHourText = findViewById(R.id.beginHour)
 
@@ -46,6 +49,9 @@ class StatActivity : AppCompatActivity() {
 
         chronoRun = intent.getLongExtra("chronoEveryRun", 1L)
         Log.d("StatActivity", "chronoRun récupéré: $chronoRun")
+
+        chronoShoot = intent.getLongExtra("chronoShoot", 1L)
+        Log.d("StatActivity","chronoShoot récupéré: $chronoShoot")
 
 
 
@@ -84,10 +90,12 @@ class StatActivity : AppCompatActivity() {
             // Ajouter chronoTime à la somme des durées des performances
             val totalDuration = chronoTime
             val totalRun = chronoRun
+            val totalShoot = chronoShoot
             val totalMissedTargets = sharedPreferences.getInt("totalMissedTargets", 0)
 
             totalDurationText.text = "Temps total: ${formatDuration(totalDuration)}"
             totalRunText.text = "Temps passé à courir: ${formatDuration(totalRun)}"
+            totalShootText.text = "Temps passé à tirer: ${formatDuration(totalShoot)}"
             targetCountsText.text = "Cibles manquées: ${totalMissedTargets}"
         } else {
             totalDurationText.text = "Aucune donnée"

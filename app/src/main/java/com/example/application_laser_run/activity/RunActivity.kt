@@ -56,13 +56,6 @@ class RunActivity : AppCompatActivity() {
         chronoRunTime.start()
 
         // Sauvegarder l'heure de début lors de l'arrivée sur RunActivity
-        val startTime = System.currentTimeMillis()
-        val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        val formattedStartTime = sdf.format(Date(startTime))
-
-        val editor = sharedPreferences.edit()
-        editor.putString("start_time", formattedStartTime) // Enregistrer l'heure de début
-        editor.apply()
 
         val buttonRun = findViewById<Button>(R.id.buttonRun)
         buttonRun.setOnClickListener {
@@ -73,14 +66,6 @@ class RunActivity : AppCompatActivity() {
 
             // Vous pouvez maintenant utiliser ou afficher chronoEveryRun
             Log.d("ChronoEveryRun", "Le temps récupéré du chronoRun est : $chronoEveryRun")
-
-            // Enregistrer l'heure de fin avant de passer à l'activité suivante
-            val endTime = System.currentTimeMillis()
-            val formattedEndTime = sdf.format(Date(endTime))
-
-            // Sauvegarder l'heure de fin dans SharedPreferences
-            editor.putString("end_time", formattedEndTime) // Enregistrer l'heure de fin
-            editor.apply()
 
             // Passer le temps et la valeur de 'tour' à l'activité suivante
             val intent = Intent(this, ShootActivity::class.java)
