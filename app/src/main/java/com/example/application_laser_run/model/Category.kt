@@ -6,5 +6,4 @@ data class Category(
     val initialDistance: Int,
     val lapDistance: Int,
     val lapCount: Int,
-    val shootDistance: Int
-)
+    val shootDistance: Int)
