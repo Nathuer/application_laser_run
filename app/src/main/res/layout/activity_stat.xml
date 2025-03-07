@@ -8,73 +8,101 @@
     tools:context=".activity.StatActivity"
     android:background="@color/backgroundColor">
 
-    <!-- Heure de début -->
+    <!-- Titre -->
     <TextView
-        android:id="@+id/beginHour"
+        android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Heure de début: --:--"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="16dp"
+        android:text="Statistiques de Performance"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Temps total -->
+    <!-- Temps total de l'entraînement -->
     <TextView
-        android:id="@+id/totalDuration"
+        android:id="@+id/totalDurationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Temps total: --"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintTop_toBottomOf="@id/beginHour"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="16dp"
+        android:text="Temps total de l'entraînement :"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleText" />
 
+    <!-- Temps de course -->
     <TextView
-        android:id="@+id/totalRun"
+        android:id="@+id/runDurationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Temps total: --"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintTop_toBottomOf="@id/totalDuration"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="8dp"
+        android:text="Temps de course :"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/totalDurationText" />
 
+    <!-- Vitesse de course moyenne -->
     <TextView
-        android:id="@+id/totalShoot"
+        android:id="@+id/avgSpeedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Temps total: --"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintTop_toBottomOf="@id/totalRun"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="8dp"
+        android:text="Vitesse de course moyenne :"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/runDurationText" />
+
+    <!-- Temps le plus petit lors du tir -->
+    <TextView
+        android:id="@+id/shootMinDurationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Temps le plus petit lors du tir :"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/avgSpeedText" />
+
+    <!-- Temps le plus long lors du tir -->
+    <TextView
+        android:id="@+id/shootMaxDurationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Temps le plus long lors du tir :"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shootMinDurationText" />
+
+    <!-- Temps moyen lors du tir -->
+    <TextView
+        android:id="@+id/avgShootDurationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Temps moyen lors du tir :"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shootMaxDurationText" />
 
     <!-- Nombre de cibles manquées -->
     <TextView
-        android:id="@+id/targetCounts"
+        android:id="@+id/missedTargetsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cibles manquées: --"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintTop_toBottomOf="@id/totalShoot"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- RecyclerView pour afficher les performances (commenté pour l'instant) -->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/targetCounts"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_marginTop="8dp"
+        android:text="Nombre de cibles manquées :"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/avgShootDurationText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

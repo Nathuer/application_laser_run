@@ -3,103 +3,109 @@ package com.example.application_laser_run.activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.application_laser_run.R
 import com.example.application_laser_run.adapter.PerformanceAdapter
+import com.example.application_laser_run.dao.PerformanceDao
 import com.example.application_laser_run.database.AppDatabase
+import com.example.application_laser_run.model.MyApplication
 import com.example.application_laser_run.model.Performance
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
 class StatActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: PerformanceAdapter
-    private lateinit var totalDurationText: TextView
-    private lateinit var totalRunText: TextView
-    private lateinit var totalShootText: TextView
-    private lateinit var averageDurationText: TextView
-    private lateinit var targetCountsText: TextView
-    private lateinit var beginHourText: TextView
-    private var chronoTime: Long = 0L // Ajout de chronoTime
-    private var chronoRun: Long = 0L // Ajout de chronoRun
-    private var chronoShoot: Long = 0L // Ajout de chronoShoot
+
+    private lateinit var performanceDao: PerformanceDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stat)
 
-        // Initialisation des vues
-        recyclerView = findViewById(R.id.recyclerView)
-        totalDurationText = findViewById(R.id.totalDuration)
-        totalRunText = findViewById(R.id.totalRun)
-        totalShootText = findViewById(R.id.totalShoot)
-        targetCountsText = findViewById(R.id.targetCounts)
-        beginHourText = findViewById(R.id.beginHour)
+        // Récupérer l'instance de la base de données via le contexte de l'application
+        val app = applicationContext as MyApplication
+        performanceDao = AppDatabase.getDatabase(applicationContext).performanceDao()
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        // Calcul du temps total en heures
+        Log.d("StatActivity", "totalDuration: ${app.runDuration}")
+        val timesRun = app.runDuration / 1000
+        Log.d("StatActivity", "timesInHours: $timesRun")
+        val timesInHours = timesRun / 3600.0
 
-        // Récupérer la valeur de `chronoTime` de l'intent
-        chronoTime = intent.getLongExtra("chronoTime", 1L)
-        Log.d("StatActivity", "chronoTime récupéré: $chronoTime")
+        // Calcul de la vitesse moyenne
+        val distanceKM = (app.initialDistanceInCategory + app.lapCountInCategory * app.lapDistanceInCategory) / 1000
+        Log.d("StatActivity", "distanceKM: $distanceKM, timesInHours: $timesRun")
 
-        chronoRun = intent.getLongExtra("chronoEveryRun", 1L)
-        Log.d("StatActivity", "chronoRun récupéré: $chronoRun")
+        app.avgSpeed = if (timesInHours > 0) {
+            (distanceKM / timesInHours).toInt() // Diviser par le nombre d'heures
+        } else {
+            0
+        }
 
-        chronoShoot = intent.getLongExtra("chronoShoot", 1L)
-        Log.d("StatActivity","chronoShoot récupéré: $chronoShoot")
+        // Enregistrer les performances dans la base de données
+        savePerformance()
 
+        // Récupérer et afficher les performances enregistrées
+        displayPerformance()
+    }
 
+    private fun savePerformance() {
+        lifecycleScope.launch {
+            try {
+                val app = applicationContext as MyApplication
 
-        // Passer le context à l'adaptateur
-        adapter = PerformanceAdapter(emptyList())
-        recyclerView.adapter = adapter
+                // Création de la performance à enregistrer
+                val performance = Performance(
+                    totalDuration = app.totalDuration,
+                    runDuration = app.runDuration,
+                    avgSpeed = app.avgSpeed,
+                    shootDuration = app.shotDuration,
+                    shootMinDuration = app.shootMinDuration,
+                    shootMaxDuration = app.shootMaxDuration,
+                    shootAvgDuration = app.avgShootDuration,
+                    missedTargets = app.missedTargets,
+                    categoryId = app.categorie
+                )
 
-        // Charger les données en arrière-plan
-        GlobalScope.launch {
-            val db = AppDatabase.getInstance(applicationContext)
-            Log.d("StatActivity", "Application context: $applicationContext")
-            val performances = db.performanceDao().getAll()
-
-            // Mettre à jour le RecyclerView
-            adapter.updateData(performances)
-
-            // Récupérer la dernière performance et afficher l'heure de début
-            val lastPerformance = db.performanceDao().getLastPerformance()
-            lastPerformance?.let {
-                val startTime = it.startTime
-                // Formater l'heure en un format lisible
-                val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-                val formattedTime = sdf.format(Date(startTime))
-                beginHourText.text = "Heure de début: $formattedTime"
+                // Enregistrer la performance dans la base de données
+                performanceDao.insert(performance)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-            // Calculer et afficher les statistiques générales
-            updateStatistics(performances)
         }
     }
 
-    private fun updateStatistics(performances: List<Performance>) {
-        if (performances.isNotEmpty()) {
-            val sharedPreferences = getSharedPreferences("game_prefs", MODE_PRIVATE)
+    private fun displayPerformance() {
+        lifecycleScope.launch {
+            try {
+                // Récupérer la dernière performance enregistrée
+                val lastPerformance = performanceDao.getLastPerformance()
 
-            // Ajouter chronoTime à la somme des durées des performances
-            val totalDuration = chronoTime
-            val totalRun = chronoRun
-            val totalShoot = chronoShoot
-            val totalMissedTargets = sharedPreferences.getInt("totalMissedTargets", 0)
-
-            totalDurationText.text = "Temps total: ${formatDuration(totalDuration)}"
-            totalRunText.text = "Temps passé à courir: ${formatDuration(totalRun)}"
-            totalShootText.text = "Temps passé à tirer: ${formatDuration(totalShoot)}"
-            targetCountsText.text = "Cibles manquées: ${totalMissedTargets}"
-        } else {
-            totalDurationText.text = "Aucune donnée"
-            targetCountsText.text = "Aucune donnée"
+                // Affichage des performances dans les TextViews
+                findViewById<TextView>(R.id.totalDurationText).text =
+                    "Temps total de l'entraînement: ${formatDuration(lastPerformance.totalDuration)}"
+                findViewById<TextView>(R.id.runDurationText).text =
+                    "Temps de course: ${formatDuration(lastPerformance.runDuration)}"
+                findViewById<TextView>(R.id.avgSpeedText).text =
+                    "Vitesse de course moyenne: ${lastPerformance.avgSpeed}km/h"
+                findViewById<TextView>(R.id.shootMinDurationText).text =
+                    "Temps le plus petit lors du tir: ${formatDuration(lastPerformance.shootMinDuration)}ms"
+                findViewById<TextView>(R.id.shootMaxDurationText).text =
+                    "Temps le plus long lors du tir: ${formatDuration(lastPerformance.shootMaxDuration)}ms"
+                findViewById<TextView>(R.id.avgShootDurationText).text =
+                    "Temps moyen lors du tir: ${formatDuration(lastPerformance.shootAvgDuration)}ms"
+                findViewById<TextView>(R.id.missedTargetsText).text =
+                    "Nombre de cibles manquées: ${lastPerformance.missedTargets}"
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -109,14 +115,4 @@ class StatActivity : AppCompatActivity() {
         val seconds = (durationMs / 1000) % 60
         return String.format("%02d:%02d", minutes, seconds)
     }
-
-    private fun formatTime(timeInMillis: Long): String {
-        val formatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        val date = Date(timeInMillis)
-        return formatter.format(date)
-    }
-
 }
-
-
-
