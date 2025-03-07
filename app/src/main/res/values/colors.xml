@@ -1,11 +1,8 @@
 <resources>
     <color name="backgroundColor">#ECEFF1</color>
     <color name="primaryTextColor">#1E88E5</color>
-    <color name="secondaryTextColor">#5D4037</color>
-    <color name="listBackground">#FFFFFF</color>
-    <color name="primaryDark">#303F9F</color>
-    <color name="hoverColor">#B3E5FC</color>
     <color name="borderColor">#B0BEC5</color>
-    <color name="buttonBackground">#FF6200EE</color> <!-- Une couleur violette comme exemple -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 
 </resources>
