@@ -4,40 +4,47 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.application_laser_run.R
+import com.example.application_laser_run.model.MyApplication
 
 class CategoryChooseActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_category_choose)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
-        // Récupération des données envoyées avec l'Intent
-        val categoryName = intent.getStringExtra("CATEGORY_NAME")
-        val distanceInitiale = intent.getIntExtra("CATEGORY_DISTANCE_INITIALE", 0)
-        val distanceParcouru = intent.getIntExtra("CATEGORY_DISTANCE_PARCOURU", 0)
-        val tour = intent.getIntExtra("CATEGORY_TOUR", 0)
-        val distanceTir = intent.getIntExtra("CATEGORY_DISTANCE_TIR", 0)
+        val app = applicationContext as MyApplication
+        app.categorie = intent.getIntExtra("CATEGORY_ID", 0)
+        app.lapDistanceInCategory = intent.getIntExtra("CATEGORY_DISTANCE_PARCOURU", 0)
+        app.lapCountInCategory = intent.getIntExtra("CATEGORY_TOUR", 0)
+        app.initialDistanceInCategory = intent.getIntExtra("CATEGORY_DISTANCE_INITIALE", 0)
 
-        // Associer les TextViews aux variables correspondantes
-        val categoryNameText: TextView = findViewById(R.id.categoryName)
-        val distanceInitialeText: TextView = findViewById(R.id.distanceInitiale)
-        val distanceParcouruText: TextView = findViewById(R.id.distanceParcouru)
-        val tourText: TextView = findViewById(R.id.tour)
-        val distanceTirText: TextView = findViewById(R.id.distanceTir)
+        val name = intent.getStringExtra("CATEGORY_NAME")
+        val initialDistance = intent.getIntExtra("CATEGORY_DISTANCE_INITIALE", 0)
+        val lapDistance = intent.getIntExtra("CATEGORY_DISTANCE_PARCOURU", 0)
+        val lapCount = intent.getIntExtra("CATEGORY_TOUR", 0)
+        val shootDistance = intent.getIntExtra("CATEGORY_DISTANCE_TIR", 0)
 
-        // Affichage des données dans les TextViews
-        categoryNameText.text = categoryName ?: "Inconnu"
-        distanceInitialeText.text = "$distanceInitiale"
-        distanceParcouruText.text = "$distanceParcouru"
-        tourText.text = "$tour"
-        distanceTirText.text = "$distanceTir"
+        findViewById<TextView>(R.id.name).text = "$name"
+        findViewById<TextView>(R.id.initialDistance).text = "Distance initiale : $initialDistance"
+        findViewById<TextView>(R.id.lapDistance).text = "Distance parcourue : $lapDistance"
+        findViewById<TextView>(R.id.lapCount).text = "Nombre de tours : $lapCount"
+        findViewById<TextView>(R.id.shootDistance).text = "Distance de tir : $shootDistance"
 
-        findViewById<Button>(R.id.buttonCategory).setOnClickListener{val i = Intent(this, ReadyActivity::class.java).apply { putExtra("CATEGORY_TOUR", tour) }
-        startActivity(i)}
+        val ready = findViewById<Button>(R.id.ready)
+        ready.setOnClickListener {
+            val intent = Intent(this, RunActivity::class.java)
+            intent.putExtra("NOMBRE_TOUR", lapCount)
+            startActivity(intent)
+        }
     }
-
-
-
 }

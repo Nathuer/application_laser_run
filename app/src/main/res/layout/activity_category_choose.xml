@@ -1,153 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/backgroundColor"
-    android:layout_gravity="center">
+    tools:context=".activity.CategoryChooseActivity">
 
-    <!-- LinearLayout pour le nom de la catégorie -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <!-- Nom de la catégorie -->
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:paddingBottom="16dp"
+        android:text="Nom de la catégorie"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/categoryNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Nom de la catégorie:"
-            android:textSize="20sp"
-            android:textColor="@color/primaryTextColor"
-            android:paddingEnd="8dp"/>
-
-        <TextView
-            android:id="@+id/categoryName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Category Name"
-            android:textSize="20sp"
-        android:textColor="@color/secondaryTextColor"/>
-    </LinearLayout>
-
-    <!-- LinearLayout pour la distance initiale -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <!-- Distance initiale -->
+    <TextView
+        android:id="@+id/initialDistance"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:paddingBottom="8dp"
+        android:text="Distance initiale : "
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name" />
 
-        <TextView
-            android:id="@+id/distanceInitialeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Distance Initiale:"
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:textColor="@color/primaryTextColor"/>
-
-        <TextView
-            android:id="@+id/distanceInitiale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="18sp"
-            android:textColor="@color/secondaryTextColor"/>
-    </LinearLayout>
-
-    <!-- LinearLayout pour la distance parcourue -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <!-- Distance parcourue -->
+    <TextView
+        android:id="@+id/lapDistance"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:paddingBottom="8dp"
+        android:text="Distance parcourue : "
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/initialDistance" />
 
-        <TextView
-            android:id="@+id/distanceParcouruLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Distance Parcourue:"
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:textColor="@color/primaryTextColor"/>
-
-        <TextView
-            android:id="@+id/distanceParcouru"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="18sp"
-            android:textColor="@color/secondaryTextColor"/>
-    </LinearLayout>
-
-    <!-- LinearLayout pour le tour -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <!-- Nombre de tours -->
+    <TextView
+        android:id="@+id/lapCount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:paddingBottom="8dp"
+        android:text="Nombre de tours : "
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lapDistance" />
 
-        <TextView
-            android:id="@+id/tourLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tour:"
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:textColor="@color/primaryTextColor"/>
-
-        <TextView
-            android:id="@+id/tour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="18sp"
-            android:textColor="@color/secondaryTextColor"/>
-    </LinearLayout>
-
-    <!-- LinearLayout pour la distance de tir -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <!-- Distance de tir -->
+    <TextView
+        android:id="@+id/shootDistance"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:paddingBottom="16dp"
+        android:text="Distance de tir : "
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lapCount" />
 
-        <TextView
-            android:id="@+id/distanceTirLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Distance de Tir:"
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:textColor="@color/primaryTextColor"/>
-
-        <TextView
-            android:id="@+id/distanceTir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="18sp"
-            android:textColor="@color/secondaryTextColor"/>
-    </LinearLayout>
-
-    <!-- Bouton de validation -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Bouton pour commencer la course -->
+    <Button
+        android:id="@+id/ready"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:padding="8dp"
+        android:text="Prêt à commencer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shootDistance" />
 
-        <Button
-            android:id="@+id/buttonCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Valider"
-            android:textColor="@color/primaryDark"
-            android:textSize="18sp"
-            android:background="?android:attr/selectableItemBackground" />
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
