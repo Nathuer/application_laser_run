@@ -1,69 +1,64 @@
 package com.example.application_laser_run.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.application_laser_run.R
 import com.example.application_laser_run.model.Performance
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.text.toLong
 
-class PerformanceAdapter(private var performances: List<Performance>) :
-    RecyclerView.Adapter<PerformanceAdapter.PerformanceViewHolder>() {
+class PerformanceAdapter(private val context: Context, private val performances: List<Performance>) : BaseAdapter() {
 
-    class PerformanceViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val runDuration: TextView = view.findViewById(R.id.runDuration)
-        val shootDuration: TextView = view.findViewById(R.id.shootDuration)
-        val speed: TextView = view.findViewById(R.id.speed)
-        val missedTargets: TextView = view.findViewById(R.id.missedTargets)
-        val startTime: TextView = view.findViewById(R.id.startTime)
+    override fun getCount(): Int {
+        Log.d("PerformanceAdapter", "Nombre total d'éléments: ${performances.size}")
+        return performances.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PerformanceViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.performance_item, parent, false)
-        return PerformanceViewHolder(view)
-    }
+    override fun getItem(position: Int): Any = performances[position]
 
-    override fun onBindViewHolder(holder: PerformanceViewHolder, position: Int) {
+    override fun getItemId(position: Int): Long = performances[position].id.toLong()
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        Log.d("PerformanceAdapter", "getView appelé pour la position: $position")
+
+        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.performance_item, parent, false)
+
+        val textViewTotalTime = view.findViewById<TextView>(R.id.textViewTotalTime)
+        val textViewRunTime = view.findViewById<TextView>(R.id.textViewRunTime)
+        val textViewAvgSpeed = view.findViewById<TextView>(R.id.textViewAverageSpeed)
+        val textViewMissedTargets = view.findViewById<TextView>(R.id.textViewMissedTargets)
+        val textViewMinShootTime = view.findViewById<TextView>(R.id.textViewMinShootTime)
+        val textViewMaxShootTime = view.findViewById<TextView>(R.id.textViewMaxShootTime)
+        val textViewAvgShootTime = view.findViewById<TextView>(R.id.textViewAvgShootTime)
+
         val performance = performances[position]
-        holder.runDuration.text = "Durée de course: ${performance.runDuration} ms"
-        holder.shootDuration.text = "Durée de tir: ${performance.shootDuration} ms"
-        holder.speed.text = "Vitesse: ${performance.speed} m/s"
-        holder.missedTargets.text = "Cibles manquées: ${performance.missedTargets}"
 
-        // Récupération de l'heure de début depuis la base de données
-        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        val startTimeFormatted = dateFormat.format(Date(performance.startTime))
-        holder.startTime.text = "Heure de début: $startTimeFormatted"
+        Log.d("PerformanceAdapter", "Données de l'élément $position: $performance")
+
+        textViewTotalTime.text = "Temps Total: ${formatDuration(performance.totalDuration)} ms"
+        textViewRunTime.text = "Temps Run: ${formatDuration(performance.runDuration)} ms"
+        textViewAvgSpeed.text = "Vitesse de course moyenne: ${performance.avgSpeed} m/s"
+        textViewMinShootTime.text = "Temps MinShootTime: ${formatDuration(performance.shootMinDuration)} ms"
+        textViewMaxShootTime.text = "Temps MaxShootTime: ${formatDuration(performance.shootMaxDuration)} ms"
+        textViewAvgShootTime.text = "Temps AvgShootTime: ${formatDuration(performance.shootAvgDuration)} ms"
+        textViewMissedTargets.text = "Cibles Manquées: ${performance.missedTargets}"
+
+
+        return view
     }
 
-    override fun getItemCount(): Int = performances.size
-
-    fun updateData(newPerformances: List<Performance>) {
-        val diffResult = DiffUtil.calculateDiff(PerformanceDiffCallback(performances, newPerformances))
-        performances = newPerformances
-        diffResult.dispatchUpdatesTo(this)
-    }
-}
-
-class PerformanceDiffCallback(
-    private val oldList: List<Performance>,
-    private val newList: List<Performance>
-) : DiffUtil.Callback() {
-    override fun getOldListSize() = oldList.size
-    override fun getNewListSize() = newList.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+    // Fonction pour formater la durée en mm:ss
+    private fun formatDuration(durationMs: Long): String {
+        val minutes = (durationMs / 1000) / 60
+        val seconds = (durationMs / 1000) % 60
+        return String.format("%02d:%02d", minutes, seconds)
     }
 }

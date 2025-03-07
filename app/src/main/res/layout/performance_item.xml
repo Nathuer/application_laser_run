@@ -1,38 +1,106 @@
 <!-- res/layout/item_performance.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".activity.StatActivity">
 
+    <!-- Texte affichant le temps total -->
     <TextView
-        android:id="@+id/startTime"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewTotalTime"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Heure de début: --:--" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Temps Total: "
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
+    <!-- Texte affichant le temps de course -->
     <TextView
-        android:id="@+id/runDuration"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewRunTime"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Durée de course: 0 ms" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Temps Run: "
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTotalTime" />
 
+    <!-- Texte affichant la vitesse moyenne -->
     <TextView
-        android:id="@+id/shootDuration"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewAverageSpeed"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Durée de tir: 0 ms" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Vitesse de course moyenne: "
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewRunTime" />
 
+    <!-- Texte affichant le temps minimum de tir -->
     <TextView
-        android:id="@+id/speed"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewMinShootTime"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Vitesse: 0 m/s" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Temps MinShootTime: "
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewAverageSpeed" />
 
+    <!-- Texte affichant le temps maximum de tir -->
     <TextView
-        android:id="@+id/missedTargets"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewMaxShootTime"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Cibles manquées: 0" />
-</LinearLayout>
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Temps MaxShootTime: "
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewMinShootTime" />
+
+    <!-- Texte affichant le temps moyen de tir -->
+    <TextView
+        android:id="@+id/textViewAvgShootTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Temps AvgShootTime: "
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewMaxShootTime" />
+
+    <!-- Texte affichant le nombre de cibles manquées -->
+    <TextView
+        android:id="@+id/textViewMissedTargets"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Cibles Manquées: "
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewAvgShootTime"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
