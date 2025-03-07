@@ -14,156 +14,106 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.application_laser_run.R
+import com.example.application_laser_run.model.MyApplication
 
 class ShootActivity : AppCompatActivity() {
     private var countdownTimer: CountDownTimer? = null
     private var timeRemaining: Long = 50000
     private lateinit var sharedPreferences: SharedPreferences
-    private var tour: Int = 1
+    private var timer: Long = 0
+    private var sonnerie: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shoot)
 
-        sharedPreferences = getSharedPreferences("game_prefs", MODE_PRIVATE)
-        val app = application as MyApplication
+        // Récupération du nombre de tours et du tour actuel
+        val nbTour = intent.getIntExtra("NOMBRE_TOUR", 0)
+        var tour = intent.getIntExtra("TOUR", 1)
 
-        // Récupération du nombre de tours
-        tour = intent.getIntExtra("CATEGORY_TOUR", 1)
-        sharedPreferences.edit().putInt("tour", tour).apply()
-
-        // Gestion du roundCount
-        val lastSessionTime = sharedPreferences.getLong("lastSessionTime", 0L)
-        val currentTime = System.currentTimeMillis()
-        app.roundCount = if (currentTime - lastSessionTime > 5000) 1 else sharedPreferences.getInt("roundCount", 1)
-
-        updateRoundTextView()
-
-        // Gestion du chronomètre
-        val chronoTime = intent.getLongExtra("chronoTime", 0L)
-        val chronoRun = intent.getLongExtra("chronoEveryRun", 0L)
-        app.chronometer += chronoRun
-
-        val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
-
-        chronoEveryTime.base = SystemClock.elapsedRealtime() - chronoTime
-        chronoEveryTime.start()
-
-        startCountdown()
-        fetchTarget()
-    }
-
-    private fun updateRoundTextView() {
-        val roundTextView = findViewById<TextView>(R.id.textTour)
-        val app = application as MyApplication
-        roundTextView.text = "Tour n° ${app.roundCount}"
-
-        if (app.roundCount > tour) {
-            val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
-            Toast.makeText(this, "Fin du jeu. Vous avez terminé tous les tours.", Toast.LENGTH_SHORT).show()
-            val i = Intent(this, StatActivity::class.java)
-            val chronoFinal = SystemClock.elapsedRealtime() - chronoEveryTime.base
-            i.putExtra("chronoTime", chronoFinal)
-            i.putExtra("chronoEveryRun", app.chronometer)
-            i.putExtra("chronoShoot", app.chronometerForRuntime)
-            Log.d("ShootActivity", "ChronoShoot envoyé: ${app.chronometerForRuntime}")
-            startActivity(i)
-        }
-    }
-
-    private fun startCountdown() {
-        val countdownTextView = findViewById<TextView>(R.id.countdownTextView)
-        countdownTimer = object : CountDownTimer(timeRemaining, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                timeRemaining = millisUntilFinished
-                val minutes = (timeRemaining / 1000) / 60
-                val seconds = (timeRemaining / 1000) % 60
-                countdownTextView.text = String.format("%02d:%02d", minutes, seconds)
-            }
-
-            override fun onFinish() {
-                val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
-                chronoEveryTime.stop()
-
-                AlertDialog.Builder(this@ShootActivity)
-                    .setTitle("Temps écoulé")
-                    .setMessage("Le temps du tour est terminé !")
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
-                        val intent = Intent(this@ShootActivity, RunActivity::class.java)
-                        intent.putExtra("elapsedTime", SystemClock.elapsedRealtime() - chronoEveryTime.base)
-                        startActivity(intent)
-                    }
-                    .create().show()
-
-                MediaPlayer.create(this@ShootActivity, R.raw.sonnerie).apply {
-                    setOnCompletionListener { release() }
-                    start()
-                }
-            }
-        }.start()
-    }
-
-    private fun fetchTarget() {
         val targets = listOf("1", "2", "3", "4", "5", "0")
         val listView = findViewById<ListView>(R.id.listCible)
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, targets)
         listView.adapter = adapter
 
+        timer = SystemClock.elapsedRealtime()
+
         listView.setOnItemClickListener { _, _, position, _ ->
             val selectedTarget = targets[position].toInt()
-            val app = application as MyApplication
-            app.missedTargets += (5 - selectedTarget)
-            sharedPreferences.edit().putInt("totalMissedTargets", app.missedTargets).apply()
+            val elapsedTime = SystemClock.elapsedRealtime() - timer
 
-            // Récupérer la valeur du countdownTextView et la convertir en millisecondes
-            val countdownTextView = findViewById<TextView>(R.id.countdownTextView)
-            val countdownTime = countdownTextView.text.toString() // "mm:ss"
-            val timeParts = countdownTime.split(":")
-            val minutes = timeParts[0].toInt()
-            val seconds = timeParts[1].toInt()
+            val app = applicationContext as MyApplication
+            val targetsMissed = app.missedTargets
+            app.missedTargets = targetsMissed + (5 - selectedTarget)
 
-            // Convertir en millisecondes
-            val countdownInMillis = (minutes * 60 + seconds) * 1000
+            val totalDuration = app.totalDuration
+            app.totalDuration = totalDuration + elapsedTime
+            app.shootDuration.add(elapsedTime)
 
-            // La valeur de base (50000 ms ou 5 minutes)
-            val baseTime = 50000L // En millisecondes
+            val avgShootDuration = if (app.shootDuration.isNotEmpty()) {
+                app.shootDuration.average().toLong()
+            } else {
+                0L // ou une autre valeur par défaut si la liste est vide
+            }
+            app.avgShootDuration = avgShootDuration
 
-            // Faire la soustraction
-            val result = baseTime - countdownInMillis
+            val shootMaxDuration = app.shootMaxDuration
+            app.shootMaxDuration = if (elapsedTime > shootMaxDuration) elapsedTime else shootMaxDuration
 
-            // Enregistrer le résultat dans chronometerForRuntime
-            app.chronometerForRuntime += result
+            val shootMinDuration = app.shootMinDuration
+            app.shootMinDuration = if (elapsedTime < shootMinDuration) elapsedTime else shootMinDuration
 
-            // Log de la soustraction
-            Log.d("ShootActivity", "${app.chronometerForRuntime}")
+            // Vérification du dernier tour
+            if (tour < nbTour) {
+                // Passer au tour suivant
+                tour++
+                val intent = Intent(this, RunActivity::class.java)
+                intent.putExtra("NOMBRE_TOUR", nbTour)
+                intent.putExtra("TOUR", tour)
+                startActivity(intent)
+                finish()
+            } else {
+                // Si c'est le dernier tour, aller à l'activité Stat
+                val intent = Intent(this, StatActivity::class.java)
+                intent.putExtra("NOMBRE_TOUR", nbTour)
+                intent.putExtra("TOUR", tour)
+                startActivity(intent)
+                finish()
+            }
+        }
 
+        // Initialisation du CountDownTimer
+        val chronoTextView = findViewById<TextView>(R.id.chrono)
 
+        countdownTimer = object : CountDownTimer(timeRemaining, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val seconds = millisUntilFinished / 1000
+                chronoTextView.text = "$seconds secondes"
+            }
 
-            app.roundCount++
-            sharedPreferences.edit().putInt("roundCount", app.roundCount).apply()
+            override fun onFinish() {
+                chronoTextView.text = "Temps écoulé"
+                // Initialiser le MediaPlayer et jouer la sonnerie
+                sonnerie = MediaPlayer.create(this@ShootActivity, R.raw.sonnerie)
+                sonnerie?.start()
+            }
+        }
+        countdownTimer?.start()
 
-            val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
-            val intent = Intent(this, RunActivity::class.java)
-            intent.putExtra("elapsedTime", SystemClock.elapsedRealtime() - chronoEveryTime.base)
-            Toast.makeText(this, "Nombre de points marqués : $selectedTarget", Toast.LENGTH_SHORT).show()
-            startActivity(intent)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 
-
-
-    override fun onResume() {
-        super.onResume()
-        updateRoundTextView()
-    }
-
+    // Libérer les ressources du MediaPlayer
     override fun onStop() {
         super.onStop()
-        sharedPreferences.edit()
-            .putLong("lastSessionTime", System.currentTimeMillis())
-            .putInt("roundCount", (application as MyApplication).roundCount)
-            .apply()
+        sonnerie?.release()
+        sonnerie = null
     }
 }
