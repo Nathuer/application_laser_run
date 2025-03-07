@@ -12,17 +12,52 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.application_laser_run.R
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.application_laser_run.database.AppDatabase
+import com.example.application_laser_run.model.MyApplication
 
 class RunActivity : AppCompatActivity() {
-
-    private var chronoBaseTime: Long = 0  // Variable pour stocker le temps de base du chronomètre
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_run)
+
+        // Initialiser la base de données Room (si nécessaire)
+        val database = AppDatabase.getDatabase(this)
+        val performanceDao = database.performanceDao()
+
+        // Récupérer les données des extras passées par l'activité précédente
+        val nbTour = intent.getIntExtra("NOMBRE_TOUR", 0)
+        var tour = intent.getIntExtra("TOUR", 1)
+
+        // Mettre à jour l'affichage du nombre de tours
+        findViewById<Button>(R.id.lapCount).text = "Tour : $tour / $nbTour"
+
+        // Initialiser le chronomètre
+        val chronoRun = findViewById<Chronometer>(R.id.chronoRun)
+        chronoRun.base = SystemClock.elapsedRealtime()
+        chronoRun.start()
+
+        // Bouton pour arrêter et passer à l'activité suivante
+        val stop = findViewById<Button>(R.id.stop)
+        stop.setOnClickListener {
+            val elapsedTime = SystemClock.elapsedRealtime() - chronoRun.base
+
+            // Mise à jour des durées dans MyApplication
+            val app = applicationContext as MyApplication
+            val runDuration = app.runDuration
+            app.runDuration = runDuration + elapsedTime
+
+            val totalDuration = app.totalDuration
+            app.totalDuration = totalDuration + elapsedTime
+
+            // Passer à l'activité suivante (ShootActivity)
+            val intent = Intent(this, ShootActivity::class.java)
+            intent.putExtra("NOMBRE_TOUR", nbTour)
+            intent.putExtra("TOUR", tour) // Le tour actuel
+            startActivity(intent)
+            finish()
+        }
 
         // Adapter l'interface pour gérer les barres système
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -30,71 +65,5 @@ class RunActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        // Récupérer la valeur de 'tour' depuis SharedPreferences (si disponible)
-        val sharedPreferences = getSharedPreferences("game_prefs", MODE_PRIVATE)
-        val storedTour = sharedPreferences.getInt("tour", 1) // Valeur par défaut est 1
-
-        // Récupérer la valeur de `tour` depuis l'Intent
-        val tour = intent.getIntExtra("CATEGORY_TOUR", storedTour)
-
-        val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
-        val chronoRunTime = findViewById<Chronometer>(R.id.chronoRun)
-
-        // Vérifier si un temps écoulé est passé depuis l'activité précédente
-        val elapsedTimeFromPreviousActivity = intent.getLongExtra("elapsedTime", 0L)
-        if (elapsedTimeFromPreviousActivity != 0L) {
-            // Si un temps est passé, ajuster le chronomètre à la valeur actuelle + le temps écoulé
-            chronoBaseTime = SystemClock.elapsedRealtime() - elapsedTimeFromPreviousActivity
-        } else {
-            // Si aucun temps n'est passé, initialiser normalement
-            chronoBaseTime = SystemClock.elapsedRealtime()
-        }
-
-        chronoEveryTime.base = chronoBaseTime
-        chronoEveryTime.start()
-        chronoRunTime.start()
-
-        // Sauvegarder l'heure de début lors de l'arrivée sur RunActivity
-
-        val buttonRun = findViewById<Button>(R.id.buttonRun)
-        buttonRun.setOnClickListener {
-            // Récupérer le temps écoulé du chrono
-            val chronoTime = SystemClock.elapsedRealtime() - chronoEveryTime.base
-
-            val chronoEveryRun = SystemClock.elapsedRealtime() - chronoRunTime.base
-
-            // Vous pouvez maintenant utiliser ou afficher chronoEveryRun
-            Log.d("ChronoEveryRun", "Le temps récupéré du chronoRun est : $chronoEveryRun")
-
-            // Passer le temps et la valeur de 'tour' à l'activité suivante
-            val intent = Intent(this, ShootActivity::class.java)
-            intent.putExtra("chronoTime", chronoTime)
-            intent.putExtra("CATEGORY_TOUR", tour)
-            intent.putExtra("chronoEveryRun", chronoEveryRun)
-            startActivity(intent)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        // Sauvegarder la valeur de 'tour' dans SharedPreferences
-        val sharedPreferences = getSharedPreferences("game_prefs", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        val tour = intent.getIntExtra("CATEGORY_TOUR", 1) // Vous pouvez récupérer la valeur de 'tour' ici
-        editor.putInt("tour", tour)  // Sauvegarder la valeur de 'tour'
-        editor.apply()
-
-        // Enregistrer l'état du chrono avant de quitter l'activité
-        val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
-        chronoBaseTime = chronoEveryTime.base + (SystemClock.elapsedRealtime() - chronoEveryTime.base)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Restaurer l'état du chrono lorsque l'activité reprend
-        val chronoEveryTime = findViewById<Chronometer>(R.id.chronoEveryTime)
-        chronoEveryTime.base = chronoBaseTime
-        chronoEveryTime.start()
     }
 }

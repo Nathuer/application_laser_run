@@ -10,53 +10,53 @@
     android:orientation="vertical"
     tools:context=".activity.RunActivity">
 
-    <Chronometer
-        android:id="@+id/chronoEveryTime"
+    <!-- Affichage du nombre de tours -->
+    <Button
+        android:id="@+id/lapCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
+        android:text="Tour : 1 / X"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Chronometer
-        android:id="@+id/chronoRun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Chronomètre -->
 
     <TextView
         android:id="@+id/textViewRun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
         android:text="Cours !"
         android:textColor="@color/primaryTextColor"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@id/buttonRun"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chronoEveryTime"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintTop_toBottomOf="@+id/stop" />
 
-    <Button
-        android:id="@+id/buttonRun"
+    <Chronometer
+        android:id="@+id/chronoRun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Terminer la course"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/button_background"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/lapCount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewRun"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <!-- Bouton d'arrêt -->
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Arrêter"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/chronoRun"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
 
 </LinearLayout>
