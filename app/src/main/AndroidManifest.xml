@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".activity.MyApplication"
+        android:name=".model.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Application_laser_run"
         tools:targetApi="31">
         <activity
+            android:name=".activity.PerformanceActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.StatActivity"
             android:exported="false" />
         <activity
@@ -25,9 +28,6 @@
             android:exported="false" />
         <activity
             android:name=".activity.ShootActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.ReadyActivity"
             android:exported="false" />
         <activity
             android:name=".activity.CategoryChooseActivity"
