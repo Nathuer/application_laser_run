@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.application_laser_run.R
+import com.example.application_laser_run.adapter.TargetAdapter
 import com.example.application_laser_run.model.MyApplication
 
 class ShootActivity : AppCompatActivity() {
@@ -36,7 +37,7 @@ class ShootActivity : AppCompatActivity() {
 
         val targets = listOf("1", "2", "3", "4", "5", "0")
         val listView = findViewById<ListView>(R.id.listCible)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, targets)
+        val adapter = TargetAdapter(this, targets)
         listView.adapter = adapter
 
         timer = SystemClock.elapsedRealtime()
@@ -48,6 +49,7 @@ class ShootActivity : AppCompatActivity() {
             val app = applicationContext as MyApplication
             val targetsMissed = app.missedTargets
             app.missedTargets = targetsMissed + (5 - selectedTarget)
+
 
             val totalDuration = app.totalDuration
             app.totalDuration = totalDuration + elapsedTime
