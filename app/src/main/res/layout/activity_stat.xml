@@ -6,17 +6,23 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context=".activity.StatActivity"
-    android:background="@color/backgroundColor">
+    android:background="@color/background_color">
 
     <!-- Titre -->
     <TextView
         android:id="@+id/titleText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Statistiques de Performance"
-        android:textColor="@android:color/black"
+        android:layout_marginBottom="25dp"
+        android:background="#3341FF"
+        android:gravity="center"
+        android:padding="25dp"
+        android:paddingBottom="16dp"
+        android:text="@string/results_training"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Temps total de l'entraînement :"
+        android:text="@string/time_training"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Temps de course :"
+        android:text="@string/time_run"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Vitesse de course moyenne :"
+        android:text="@string/avg_speed"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Temps le plus petit lors du tir :"
+        android:text="@string/min_time_shoot"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Temps le plus long lors du tir :"
+        android:text="@string/max_time_shoot"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Temps moyen lors du tir :"
+        android:text="@string/avg_time_shoot"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,11 +104,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Nombre de cibles manquées :"
+        android:text="@string/nb_missed_targets"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/avgShootDurationText" />
+
+    <Button
+        android:id="@+id/comebackMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="22dp"
+        android:text="@string/comeback"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        app:backgroundTint="@color/colorButtonCat"
+        app:layout_constraintTop_toBottomOf="@id/missedTargetsText"
+        tools:layout_editor_absoluteX="34dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

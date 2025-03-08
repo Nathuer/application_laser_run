@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/colorButtonCat"/> <!-- Utilisation de la couleur déjà définie -->
+    <corners android:radius="20000dp"/> <!-- Coins arrondis avec un rayon de 16dp -->
+</shape>

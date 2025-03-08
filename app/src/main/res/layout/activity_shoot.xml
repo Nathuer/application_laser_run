@@ -6,46 +6,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ShootActivity"
-    android:background="@color/backgroundColor"
+    android:background="@color/background_color"
     android:padding="16dp">
 
-    <!-- Affichage du numéro de tour -->
     <TextView
-        android:id="@+id/textTour"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tour n° "
-        android:textSize="20sp"
-        android:textColor="@color/primaryTextColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp" />
-
-    <!-- Chronomètre -->
-    <Chronometer
-        android:id="@+id/chronoEveryTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:background="#3341FF"
+        android:gravity="center"
+        android:padding="25dp"
+        android:paddingBottom="16dp"
+        android:text="@string/tir"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/textTour"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Affichage du compte à rebours -->
+
+    <!-- Liste des cibles -->
     <TextView
         android:id="@+id/chrono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00"
-        android:textSize="30sp"
         android:textColor="#FF0000"
-        app:layout_constraintTop_toBottomOf="@id/chronoEveryTime"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="122dp"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        />
 
-    <!-- Liste des cibles -->
     <ListView
         android:id="@+id/listCible"
         android:layout_width="match_parent"
@@ -53,9 +50,8 @@
         app:layout_constraintTop_toBottomOf="@id/chrono"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="32dp"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
-        android:background="@drawable/list_background"
+        android:dividerHeight="5dp"
+        android:divider="@android:color/transparent"
         android:padding="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

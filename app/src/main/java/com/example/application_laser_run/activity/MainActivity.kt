@@ -40,6 +40,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, PerformanceActivity::class.java)
             startActivity(intent)
         }
+
+        val maps = findViewById<Button>(R.id.maps)
+        maps.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+        }
         fetchCategories()
     }
     fun fetchCategories() {

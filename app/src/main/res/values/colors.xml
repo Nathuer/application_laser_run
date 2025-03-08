@@ -1,8 +1,10 @@
 <resources>
-    <color name="backgroundColor">#ECEFF1</color>
+    <color name="background_color">#6DB1D9</color>
     <color name="primaryTextColor">#1E88E5</color>
     <color name="borderColor">#B0BEC5</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorButtonCat">#181376</color>
+
 
 </resources>

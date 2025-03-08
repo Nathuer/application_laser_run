@@ -1,25 +1,18 @@
 package com.example.application_laser_run.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.application_laser_run.R
-import com.example.application_laser_run.adapter.PerformanceAdapter
 import com.example.application_laser_run.dao.PerformanceDao
 import com.example.application_laser_run.database.AppDatabase
 import com.example.application_laser_run.model.MyApplication
 import com.example.application_laser_run.model.Performance
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.*
 
 class StatActivity : AppCompatActivity() {
 
@@ -47,6 +40,12 @@ class StatActivity : AppCompatActivity() {
             (distanceKM / timesInHours).toInt() // Diviser par le nombre d'heures
         } else {
             0
+        }
+
+        val comebackButton = findViewById<Button>(R.id.comebackMain)
+        comebackButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
         // Enregistrer les performances dans la base de données
@@ -96,11 +95,11 @@ class StatActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.avgSpeedText).text =
                     "Vitesse de course moyenne: ${lastPerformance.avgSpeed}km/h"
                 findViewById<TextView>(R.id.shootMinDurationText).text =
-                    "Temps le plus petit lors du tir: ${formatDuration(lastPerformance.shootMinDuration)}ms"
+                    "Temps le plus petit lors du tir: ${formatDuration(lastPerformance.shootMinDuration)}min"
                 findViewById<TextView>(R.id.shootMaxDurationText).text =
-                    "Temps le plus long lors du tir: ${formatDuration(lastPerformance.shootMaxDuration)}ms"
+                    "Temps le plus long lors du tir: ${formatDuration(lastPerformance.shootMaxDuration)}min"
                 findViewById<TextView>(R.id.avgShootDurationText).text =
-                    "Temps moyen lors du tir: ${formatDuration(lastPerformance.shootAvgDuration)}ms"
+                    "Temps moyen lors du tir: ${formatDuration(lastPerformance.shootAvgDuration)}min"
                 findViewById<TextView>(R.id.missedTargetsText).text =
                     "Nombre de cibles manquées: ${lastPerformance.missedTargets}"
             } catch (e: Exception) {

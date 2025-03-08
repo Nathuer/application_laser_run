@@ -4,4 +4,25 @@
     <string name="choisir_sa_categorie">Choisir sa catégorie de compétition</string>
     <string name="pret">Prêt ?</string>
     <string name="demarrer">Démarrer</string>
+    <string name="nombre_tours">Nombre de tours :</string>
+    <string name="distance_tir">Distance de tir :</string>
+    <string name="commencer">Prêt à commencer</string>
+    <string name="categorie">Sélectionnez une catégorie</string>
+    <string name="geo">Se géolocaliser</string>
+    <string name="stats">Voir les statistiques</string>
+    <string name="retour">Retour</string>
+    <string name="fin_course">Fin de la course</string>
+    <string name="tour">Tour : 1 / X</string>
+    <string name="course">Période de course</string>
+    <string name="tir">Période de tir</string>
+    <string name="comeback">Retour au menu principal</string>
+    <string name="nb_missed_targets">Nombre de cibles manquées :</string>
+    <string name="avg_time_shoot">Temps moyen lors du tir :</string>
+    <string name="max_time_shoot">Temps le plus long lors du tir :</string>
+    <string name="min_time_shoot">Temps le plus petit lors du tir :</string>
+    <string name="avg_speed">Vitesse de course moyenne :</string>
+    <string name="time_run">Temps de course :</string>
+    <string name="time_training">Temps total de l\'entraînement :</string>
+    <string name="results_training">Résultats de l\'entraînement</string>
+    <string name="category_choose">Catégorie choisie :</string>
 </resources>

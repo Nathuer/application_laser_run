@@ -6,74 +6,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".activity.CategoryChooseActivity">
+    tools:context=".activity.CategoryChooseActivity"
+    android:background="@color/background_color">
 
-    <!-- Nom de la catégorie -->
     <TextView
         android:id="@+id/name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         android:text="Nom de la catégorie"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="#3341FF"
+        android:padding="25dp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="32dp"/>
 
-    <!-- Distance initiale -->
     <TextView
         android:id="@+id/initialDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:text="Distance initiale : "
-        android:textSize="16sp"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textColor="#333333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name" />
+        app:layout_constraintTop_toBottomOf="@id/name"
+        android:layout_marginTop="16dp"/>
 
-    <!-- Distance parcourue -->
     <TextView
         android:id="@+id/lapDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:text="Distance parcourue : "
-        android:textSize="16sp"
+        android:textSize="25sp"
+        android:textColor="#333333"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/initialDistance" />
+        app:layout_constraintTop_toBottomOf="@id/initialDistance"/>
 
-    <!-- Nombre de tours -->
     <TextView
         android:id="@+id/lapCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
-        android:text="Nombre de tours : "
-        android:textSize="16sp"
+        android:text="@string/nombre_tours"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textColor="#333333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lapDistance" />
+        app:layout_constraintTop_toBottomOf="@id/lapDistance"/>
 
-    <!-- Distance de tir -->
     <TextView
         android:id="@+id/shootDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
-        android:text="Distance de tir : "
-        android:textSize="16sp"
+        android:text="@string/distance_tir"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textColor="#333333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lapCount" />
+        app:layout_constraintTop_toBottomOf="@id/lapCount"/>
 
-    <!-- Bouton pour commencer la course -->
     <Button
         android:id="@+id/ready"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Prêt à commencer"
+        android:text="@string/commencer"
+        android:textColor="#FFFFFF"
+        android:padding="22dp"
+        android:textSize="25sp"
+        android:background="@drawable/rounded_background"
+        app:backgroundTint="@color/colorButtonCat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shootDistance" />
+        app:layout_constraintTop_toBottomOf="@id/shootDistance"
+        android:layout_marginTop="24dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

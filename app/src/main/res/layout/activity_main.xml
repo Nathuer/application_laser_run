@@ -6,30 +6,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/background_color"> <!-- Fond global ici -->
 
-    <!-- Titre de l'application -->
+    <!-- Entête avec le nom "Laser Run" -->
+    <TextView
+        android:id="@+id/headerText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Laser Run"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="#3341FF"
+        android:padding="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="16dp"/>
+
+    <!-- Titre de la catégorie -->
     <TextView
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sélectionnez une catégorie"
-        android:textSize="18sp"
+        android:text="@string/categorie"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toBottomOf="@id/headerText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingBottom="8dp"/>
 
     <!-- Liste des catégories -->
+
     <ListView
         android:id="@+id/listCategories"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:divider="@android:color/darker_gray"
+        android:layout_width="414dp"
+        android:layout_height="442dp"
+        android:padding="8dp"
+        android:divider="@android:color/transparent"
         android:dividerHeight="1dp"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintBottom_toTopOf="@id/statPerf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/maps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/geo"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:backgroundTint="@color/colorButtonCat"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="8dp"/>
@@ -39,10 +73,15 @@
         android:id="@+id/statPerf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Voir les statistiques"
+        android:layout_marginBottom="68dp"
+        android:padding="8dp"
+        android:textSize="20sp"
+        android:text="@string/stats"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="@color/colorButtonCat"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="8dp"/>
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
