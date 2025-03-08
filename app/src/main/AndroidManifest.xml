@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Application_laser_run"
         tools:targetApi="31">
         <activity
+            android:name=".activity.MapsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.PerformanceActivity"
             android:exported="false" />
         <activity
