@@ -2,6 +2,7 @@ package com.example.application_laser_run.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +25,7 @@ class CategoryChooseActivity : AppCompatActivity() {
 
         val app = applicationContext as MyApplication
         app.categorie = intent.getIntExtra("CATEGORY_ID", 0)
+        Log.d("CategoryChooseActivity", "Category ID: ${app.categorie}")
         app.lapDistanceInCategory = intent.getIntExtra("CATEGORY_DISTANCE_PARCOURU", 0)
         app.lapCountInCategory = intent.getIntExtra("CATEGORY_TOUR", 0)
         app.initialDistanceInCategory = intent.getIntExtra("CATEGORY_DISTANCE_INITIALE", 0)
