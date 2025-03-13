@@ -28,7 +28,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.RunActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.ShootActivity"
             android:exported="false" />
