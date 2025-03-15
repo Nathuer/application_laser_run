@@ -17,14 +17,16 @@ Fonctionnalités fonctionnelles:
 - on a accès à une carte avec des stades dessus pour s'entraîner
 - on a le temps moyen d'entraînement, de course, de tir et le nombre moyen de cibles ratées
 - présence des tests expressos
+- présence de moyenne par rapport aux catégories
 
 Fonctionnalités non fonctionnelles:
-- pas de satistiques par catégorie
 
 
 Bugs:
 - si on relance un entraînement sans fermé l'application, toutes les informations du précedent entraînement s'ajoutent au nouveau
 - tout les tests expressos ne fonctionnent pas
+- les valeurs données sur la page de stats à la fin de l'entraînement ne sont pas toujours juste
+
 
 J'ai utilisé ROOM pour stocker mes données car c'est une fonctionnalité que j'avais déjà utiliser au cours de mon BTS.
 Pour faire les tests expressos, j'ai essayé d'utiliser Matches afin de simuler une action de click mais ça n'a pas fonctionné correctement
