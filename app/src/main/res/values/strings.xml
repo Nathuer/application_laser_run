@@ -8,7 +8,7 @@
     <string name="distance_tir">Distance de tir :</string>
     <string name="commencer">Prêt à commencer</string>
     <string name="categorie">Sélectionnez une catégorie</string>
-    <string name="geo">Se géolocaliser</string>
+    <string name="geo">Voir la carte</string>
     <string name="stats">Voir les statistiques</string>
     <string name="retour">Retour</string>
     <string name="fin_course">Fin de la course</string>
@@ -25,4 +25,7 @@
     <string name="time_training">Temps total de l\'entraînement :</string>
     <string name="results_training">Résultats de l\'entraînement</string>
     <string name="category_choose">Catégorie choisie :</string>
+    <string name="senior">Catégorie Senior</string>
+    <string name="m40">Catégorie M40</string>
+    <string name="m60">Catégorie M60</string>
 </resources>

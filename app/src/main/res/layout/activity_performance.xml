@@ -38,7 +38,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Catégorie M60"
+                android:text="@string/m60"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -90,7 +90,7 @@
                 android:id="@+id/textViewM40"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Catégorie M40"
+                android:text="@string/m40"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -142,7 +142,7 @@
                 android:id="@+id/textViewSenior"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Catégorie Senior"
+                android:text="@string/senior"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
