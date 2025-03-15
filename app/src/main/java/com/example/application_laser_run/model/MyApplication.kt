@@ -13,6 +13,7 @@ class MyApplication : Application() {
     var shotDuration: Long = 0
     var missedTargets: Int = 0
     var categorie: Int = 0
+    var categorieName: String = ""
 
     var lapCountInCategory: Int = 0
     var initialDistanceInCategory: Int = 0

@@ -61,6 +61,7 @@ class StatActivity : AppCompatActivity() {
                 val app = applicationContext as MyApplication
 
                 // Création de la performance à enregistrer
+                val categoryName = if (app.categorieName.isNotBlank()) app.categorieName else "Inconnue"
                 val performance = Performance(
                     totalDuration = app.totalDuration,
                     runDuration = app.runDuration,
@@ -70,7 +71,8 @@ class StatActivity : AppCompatActivity() {
                     shootMaxDuration = app.shootMaxDuration,
                     shootAvgDuration = app.avgShootDuration,
                     missedTargets = app.missedTargets,
-                    categoryId = app.categorie
+                    categoryId = app.categorie,
+                    categoryName = app.categorieName
                 )
 
                 // Enregistrer la performance dans la base de données
@@ -84,29 +86,35 @@ class StatActivity : AppCompatActivity() {
     private fun displayPerformance() {
         lifecycleScope.launch {
             try {
+                val app = applicationContext as MyApplication
+
                 // Récupérer la dernière performance enregistrée
                 val lastPerformance = performanceDao.getLastPerformance()
 
                 // Affichage des performances dans les TextViews
+                findViewById<TextView>(R.id.categoryName).text = "Rappel de la catégorie: ${app.categorieName}"
+
                 findViewById<TextView>(R.id.totalDurationText).text =
                     "Temps total de l'entraînement: ${formatDuration(lastPerformance.totalDuration)}"
                 findViewById<TextView>(R.id.runDurationText).text =
                     "Temps de course: ${formatDuration(lastPerformance.runDuration)}"
                 findViewById<TextView>(R.id.avgSpeedText).text =
-                    "Vitesse de course moyenne: ${lastPerformance.avgSpeed}km/h"
+                    "Vitesse de course moyenne: ${lastPerformance.avgSpeed} km/h"
                 findViewById<TextView>(R.id.shootMinDurationText).text =
-                    "Temps le plus petit lors du tir: ${formatDuration(lastPerformance.shootMinDuration)}min"
+                    "Temps le plus petit lors du tir: ${formatDuration(lastPerformance.shootMinDuration)} min"
                 findViewById<TextView>(R.id.shootMaxDurationText).text =
-                    "Temps le plus long lors du tir: ${formatDuration(lastPerformance.shootMaxDuration)}min"
+                    "Temps le plus long lors du tir: ${formatDuration(lastPerformance.shootMaxDuration)} min"
                 findViewById<TextView>(R.id.avgShootDurationText).text =
-                    "Temps moyen lors du tir: ${formatDuration(lastPerformance.shootAvgDuration)}min"
+                    "Temps moyen lors du tir: ${formatDuration(lastPerformance.shootAvgDuration)} min"
                 findViewById<TextView>(R.id.missedTargetsText).text =
                     "Nombre de cibles manquées: ${lastPerformance.missedTargets}"
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
+
 
     // Fonction pour formater la durée en mm:ss
     private fun formatDuration(durationMs: Long): String {

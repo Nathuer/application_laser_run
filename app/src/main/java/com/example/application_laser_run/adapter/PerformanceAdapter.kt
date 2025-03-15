@@ -31,6 +31,7 @@ class PerformanceAdapter(private val context: Context, private val performances:
 
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.performance_item, parent, false)
 
+        val textViewCategoryName = view.findViewById<TextView>(R.id.categoryName)
         val textViewTotalTime = view.findViewById<TextView>(R.id.textViewTotalTime)
         val textViewRunTime = view.findViewById<TextView>(R.id.textViewRunTime)
         val textViewAvgSpeed = view.findViewById<TextView>(R.id.textViewAverageSpeed)
@@ -43,6 +44,7 @@ class PerformanceAdapter(private val context: Context, private val performances:
 
         Log.d("PerformanceAdapter", "Données de l'élément $position: $performance")
 
+        textViewCategoryName.text = performance.categoryName
         textViewTotalTime.text = "Temps Total: ${formatDuration(performance.totalDuration)} ms"
         textViewRunTime.text = "Temps Run: ${formatDuration(performance.runDuration)} ms"
         textViewAvgSpeed.text = "Vitesse de course moyenne: ${performance.avgSpeed} m/s"

@@ -26,6 +26,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/categoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Rappel de la catégorie: "
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleText" />
+
     <!-- Temps total de l'entraînement -->
     <TextView
         android:id="@+id/totalDurationText"
@@ -36,7 +47,7 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleText" />
+        app:layout_constraintTop_toBottomOf="@id/categoryName" />
 
     <!-- Temps de course -->
     <TextView

@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val statPerf = findViewById<Button>(R.id.statPerf)
+            val statPerf = findViewById<Button>(R.id.statPerf)
         statPerf.setOnClickListener {
             val intent = Intent(this, PerformanceActivity::class.java)
             startActivity(intent)

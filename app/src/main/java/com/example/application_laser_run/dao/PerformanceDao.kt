@@ -18,17 +18,17 @@ interface PerformanceDao {
     @Query("select * from performance order by id desc limit 1")
     suspend fun getLastPerformance(): Performance
 
-    @Query("select avg(total_duration) from performance where category_id = :category_id")
-    suspend fun getAvgTotalDuration(category_id: Int): Long?
+    @Query("select avg(total_duration) from performance where category_name = :category_name")
+    suspend fun getAvgTotalDurationByCategoryName(category_name: String): Long?
 
-    @Query("select avg(run_duration) from performance where category_id = :category_id")
-    suspend fun getAvgRunDuration(category_id: Int): Long?
+    @Query("SELECT AVG(run_duration) FROM performance WHERE category_name = :category_name")
+    suspend fun getAvgRunDurationByCategoryName(category_name: String): Long?
 
-    @Query("select shoot_avg_duration from performance where category_id = :category_id")
-    suspend fun getAvgShootDuration(category_id: Int): Long?
+    @Query("SELECT AVG(shoot_duration) FROM performance WHERE category_name = :category_name")
+    suspend fun getAvgShootDurationByCategoryName(category_name: String): Long?
 
-    @Query("select avg(missed_targets) from performance where category_id = :category_id")
-    suspend fun getAvgTargetsMissed(category_id: Int): Long?
+    @Query("SELECT AVG(missed_targets) FROM performance WHERE category_name = :category_name")
+    suspend fun getAvgTargetsMissedByCategoryName(category_name: String): Long?
 
 
     @Insert

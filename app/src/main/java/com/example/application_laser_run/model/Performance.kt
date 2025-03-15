@@ -15,5 +15,6 @@ data class Performance(
     @ColumnInfo(name = "shoot_avg_duration") val shootAvgDuration: Long,
     @ColumnInfo(name = "shoot_max_duration") val shootMaxDuration: Long,
     @ColumnInfo(name = "missed_targets") val missedTargets: Int,
-    @ColumnInfo(name = "category_id") val categoryId: Int
+    @ColumnInfo(name = "category_id") val categoryId: Int,
+    @ColumnInfo(name = "category_name") val categoryName: String
 )
