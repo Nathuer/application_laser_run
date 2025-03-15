@@ -24,7 +24,7 @@ interface PerformanceDao {
     @Query("SELECT AVG(run_duration) FROM performance WHERE category_name = :category_name")
     suspend fun getAvgRunDurationByCategoryName(category_name: String): Long?
 
-    @Query("SELECT AVG(shoot_duration) FROM performance WHERE category_name = :category_name")
+    @Query("SELECT AVG(shoot_avg_duration) FROM performance WHERE category_name = :category_name")
     suspend fun getAvgShootDurationByCategoryName(category_name: String): Long?
 
     @Query("SELECT AVG(missed_targets) FROM performance WHERE category_name = :category_name")
